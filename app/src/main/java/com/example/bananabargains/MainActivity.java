@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static final String USER_ID_KEY = "com.example.bananabargains.userIdKey";
     private static final String PREFERENCES_KEY = "com.example.bananabargains.PREFERENCES_KEY";
-
-    private static final int menuConst = R.id.userMenuLogout;
     private BananaBargainsDAO mBananaBargainsDAO;
     private TextView mMainDisplay;
 
@@ -91,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
         mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mUser != null) {
+            MenuItem item = menu.findItem(R.id.logoutMenu);
+            item.setTitle(mUser.getUsername());
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     private void checkForUser() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
 
@@ -113,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         //do we have any users at all?
         List<User> users = mBananaBargainsDAO.getAllUsers();
         if (users.size() <= 0) {
-            //hasMembrship & isAdmin are 1 for true since Room doesn't store booleans
+            //hasMembership & isAdmin are 1 for true since Room doesn't store booleans
             User defaultUser = new User("Admin1", "admin123", 1, 100.0, 1);
             User altUser = new User("Average Consumer", "ac123", 0, 50.00, 0);
             mBananaBargainsDAO.insert(defaultUser,altUser);
@@ -183,27 +190,19 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_login, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == menuConst) {
+        if(item.getItemId() == R.id.logoutMenu) {
             logoutUser();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mUser != null) {
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
-            item.setTitle(mUser.getUsername());
-        }
-        return super.onPrepareOptionsMenu(menu);
     }
 
 }
