@@ -7,4 +7,5 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="no_bananas_message">No bananas! Admin needs to restock inventory</string>
+    <string name="title_activity_login">Banana Bargains Login</string>
 </resources>
