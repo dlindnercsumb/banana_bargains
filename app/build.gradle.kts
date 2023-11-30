@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.bananabargains"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.bananabargains"
@@ -14,6 +14,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        productFlavors {
+            project.android.buildTypes.forEach { buildType ->
+                buildType.javaCompileOptions {
+                    annotationProcessorOptions {
+                        argument("room.schemaLocation", "$projectDir/schemas".toString())
+                    }
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -39,7 +49,7 @@ android {
 dependencies {
 
     var room_version = "2.6.0";
-    // Adding Room db
+
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
