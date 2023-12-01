@@ -48,8 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                     if(!validatePassword()){
                         Toast.makeText(LoginActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = MainActivity.intentFactory(getApplicationContext(), mUser.getUserId());
-                        startActivity(intent);
+                        // If user is admin AdminLanding page
+                        if(mUser.getIsAdmin() == 1) {
+                            Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUser.getUserId());
+                            startActivity(intent);
+                        } else {
+                            Intent intent = MainActivity.intentFactory(getApplicationContext(), mUser.getUserId());
+                            startActivity(intent);
+                        }
                     }
                 }
             }
