@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Banana Bargains</string>
     <string name="login">Login</string>
+    <string name="createAccount">Create Account</string>
     <string name="logout">Logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

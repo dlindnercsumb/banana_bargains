@@ -1,6 +1,7 @@
 package com.example.bananabargains;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.room.Room;
 
 import android.content.Context;
@@ -14,20 +15,27 @@ import android.widget.Toast;
 import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.BananaBargainsDAO;
 import com.example.bananabargains.DB.User;
+import com.example.bananabargains.databinding.ActivityLoginBinding;
+import com.example.bananabargains.databinding.ActivityMainBinding;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText mUsernameField;
     private EditText mPasswordField;
-    private Button mButton;
+    private AppCompatButton mButton;
+    private AppCompatButton mRegisterButton;
     private BananaBargainsDAO mBananaBargainsDao;
     private String mUsername;
     private String mPassword;
     private User mUser;
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         wireupDisplay();
 
@@ -39,27 +47,31 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordField = findViewById(R.id.editTextLoginPassword);
 
         mButton = findViewById(R.id.buttonLogin);
+        mRegisterButton = findViewById(R.id.registerButton);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getValuesFromDisplay();
-                if(checkForUserInDatabase()) {
-                    if(!validatePassword()){
-                        Toast.makeText(LoginActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
+        mRegisterButton.setOnClickListener(view -> {
+            Intent intent = CreateAccount.intentFactory(getApplicationContext());
+            startActivity(intent);
+        });
+
+        mButton.setOnClickListener(view -> {
+            getValuesFromDisplay();
+            if(checkForUserInDatabase()) {
+                if(!validatePassword()){
+                    Toast.makeText(LoginActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
+                } else {
+                    // If user is admin AdminLanding page
+                    if(mUser.getIsAdmin() == 1) {
+                        Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUser.getUserId());
+                        startActivity(intent);
                     } else {
-                        // If user is admin AdminLanding page
-                        if(mUser.getIsAdmin() == 1) {
-                            Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUser.getUserId());
-                            startActivity(intent);
-                        } else {
-                            Intent intent = MainActivity.intentFactory(getApplicationContext(), mUser.getUserId());
-                            startActivity(intent);
-                        }
+                        Intent intent = MainActivity.intentFactory(getApplicationContext(), mUser.getUserId());
+                        startActivity(intent);
                     }
                 }
             }
         });
+
     }
 
     private boolean validatePassword() {
@@ -90,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //Intent factories allow you to navigate between screens
     public static Intent intentFactory(Context context){
-        Intent intent = new Intent(context, LoginActivity.class);
-
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 }
