@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".LoginActivity">
+    tools:context=".CreateAccount">
 
     <EditText
-        android:id="@+id/editTextLoginUserName"
+        android:id="@+id/editTextCreateUserName"
         android:layout_width="212dp"
         android:layout_height="36dp"
         android:layout_marginTop="276dp"
         android:ems="10"
-        android:hint="username"
+        android:hint="Create Username"
         android:inputType="text"
         android:textAlignment="center"
         android:visibility="visible"
@@ -25,37 +25,37 @@
         />
 
     <EditText
-        android:id="@+id/editTextLoginPassword"
+        android:id="@+id/editTextCreatePassword"
         android:layout_width="204dp"
         android:layout_height="37dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_corners"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Create Password"
         android:inputType="textPassword"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLoginUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCreateUserName" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonCreateAccount"
         android:layout_width="154dp"
         android:layout_height="51dp"
         android:layout_marginTop="52dp"
         android:background="@drawable/rounded_corners_button"
-        android:text="@string/login"
+        android:text="@string/createAccount"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLoginPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCreatePassword" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -63,7 +63,7 @@
         android:text="Banana Bargains"
         android:textColor="@color/white"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextLoginUserName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextCreateUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
@@ -76,37 +76,36 @@
         android:maxWidth="200dp"
         android:maxHeight="200dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCreateAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/registerButton"
+        android:id="@+id/backToLogin"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/yellow"
-        android:text="Register here"
-        android:onClick="registerButton"
+        android:text="Login here"
         android:textColor="#40C145"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toEndOf="@+id/registerText"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
-        app:layout_constraintVertical_bias="0.403"
-        style="?android:attr/borderlessButtonStyle"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCreateAccount"
+        app:layout_constraintVertical_bias="0.4" />
 
     <TextView
         android:id="@+id/registerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:text="Don't have an account?"
+        android:layout_marginStart="96dp"
+        android:text="Have an account?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCreateAccount"
+        app:layout_constraintVertical_bias="0.401" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
