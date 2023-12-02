@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.room.Room;
 
 import android.view.MenuInflater;
@@ -32,16 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static final String USER_ID_KEY = "com.example.bananabargains.userIdKey";
     private static final String PREFERENCES_KEY = "com.example.bananabargains.PREFERENCES_KEY";
-
-    private static final int menuConst = R.id.userMenuLogout;
     private BananaBargainsDAO mBananaBargainsDAO;
     private TextView mMainDisplay;
+    private AppCompatButton mLogoutButton;
 
     //Info to login user
     private int mUserId = -1;
     private SharedPreferences mPreferences = null;
     private User mUser;
-
     private List<Banana> mBananaList;
 
     @Override
@@ -60,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: Get main display widgets and display them
         mMainDisplay = binding.mainBananaBargainsDisplay;
+        mLogoutButton = binding.userLogoutButton;
+
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
 
         refreshDisplay();
 
@@ -115,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         if (users.size() <= 0) {
             //hasMembrship & isAdmin are 1 for true since Room doesn't store booleans
             User defaultUser = new User("Admin1", "admin123", 1, 100.0, 1);
-            User altUser = new User("Average Consumer", "ac123", 0, 50.00, 0);
+            User altUser = new User("averageConsumer", "ac1234", 0, 50.00, 0);
             mBananaBargainsDAO.insert(defaultUser,altUser);
         }
 
@@ -150,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
             mMainDisplay.setText(R.string.no_bananas_message);
         }
     }
-
-    //Creating the logout option
     private void logoutUser() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage(R.string.logout);
@@ -164,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                         clearUserFromPref();
                         mUserId = -1;
                         checkForUser();
+                        Intent intent = LoginActivity.intentFactory(getApplicationContext());
+                        startActivity(intent);
                     }
                 });
         alertBuilder.setNegativeButton(getString(R.string.no),
@@ -181,29 +188,4 @@ public class MainActivity extends AppCompatActivity {
     private void clearUserFromPref() {
         addUserToPreference(-1);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == menuConst) {
-            logoutUser();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mUser != null) {
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
-            item.setTitle(mUser.getUsername());
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
 }
