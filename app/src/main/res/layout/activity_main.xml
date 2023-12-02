@@ -8,16 +8,146 @@
 
     <TextView
         android:id="@+id/mainBananaBargainsDisplay"
-        android:layout_width="373dp"
-        android:layout_height="217dp"
+        android:layout_width="386dp"
+        android:layout_height="168dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fadeScrollbars="true"
-        android:scrollbars = "vertical"
+        android:scrollbars="vertical"
         android:text="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintVertical_bias="0.319" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/userBuyMembershipButton"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:background="@drawable/rounded_corners_main_screen"
+        android:text="Buy Membership"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mainBananaBargainsDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bananaBargainsToolbar" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bananaBargainsToolbar"
+        android:layout_width="413dp"
+        android:layout_height="111dp"
+        android:background="@color/yellow"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/userCheckoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_main_screen"
+        android:text="Checkout"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainBananaBargainsDisplay"
+        app:layout_constraintVertical_bias="0.788" />
+
+    <ImageView
+        android:id="@+id/appBarLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintTop_toTopOf="@+id/welcomeUserText"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/welcomeUserText"
+        android:layout_width="71dp"
+        android:layout_height="26dp"
+        android:gravity="center"
+        android:text="@string/welcome"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/userItemsInCart"
+        app:layout_constraintEnd_toEndOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintVertical_bias="0.47" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/userLogoutButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="94dp"
+        android:layout_height="45dp"
+        android:background="@drawable/rounded_corners_main_screen"
+        android:text="Logout"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintStart_toEndOf="@+id/welcomeUserText"
+        app:layout_constraintTop_toTopOf="@+id/welcomeUserText"
+        app:layout_constraintVertical_bias="0.465" />
+
+    <TextView
+        android:id="@+id/userItemsInCart"
+        android:layout_width="121dp"
+        android:layout_height="26dp"
+        android:gravity="center"
+        android:text="Items in Cart: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/appBarLogo"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbar" />
+
+    <TextView
+        android:id="@+id/userMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Money: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintEnd_toStartOf="@+id/userLogoutButton"
+        app:layout_constraintHorizontal_bias="0.646"
+        app:layout_constraintStart_toEndOf="@+id/appBarLogo"
+        app:layout_constraintTop_toBottomOf="@+id/userItemsInCart"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <TextView
+        android:id="@+id/mainUsername"
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:shadowColor="#050505"
+        android:text="@string/username"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintEnd_toStartOf="@+id/userLogoutButton"
+        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintStart_toEndOf="@+id/appBarLogo"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintVertical_bias="0.093" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
