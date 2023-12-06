@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private BananaBargainsDAO mBananaBargainsDAO;
     private TextView mMainDisplay;
     private AppCompatButton mLogoutButton;
+    private AppCompatButton mBuyMembershipButton;
 
     //Info to login user
     private int mUserId = -1;
@@ -60,11 +61,20 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Get main display widgets and display them
         mMainDisplay = binding.mainBananaBargainsDisplay;
         mLogoutButton = binding.userLogoutButton;
+        mBuyMembershipButton = binding.userBuyMembershipButton;
 
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logoutUser();
+            }
+        });
+
+        mBuyMembershipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Membership.intentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
 
@@ -79,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-    //Intent factories allow you to navigate between screens
     public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(USER_ID_KEY, userId);
