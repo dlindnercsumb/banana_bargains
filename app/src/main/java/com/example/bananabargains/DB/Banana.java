@@ -11,8 +11,7 @@ public class Banana {
     private String mBananaDescription;
     private double mBananaPrice;
 
-    public Banana(int bananaId, String bananaDescription, double bananaPrice) {
-        mBananaId = bananaId;
+    public Banana(String bananaDescription, double bananaPrice) {
         mBananaDescription = bananaDescription;
         mBananaPrice = bananaPrice;
     }

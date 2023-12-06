@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.example.bananabargains.DB.User;
 import com.example.bananabargains.databinding.ActivityAdminLandingBinding;
-import com.example.bananabargains.databinding.ActivityMainBinding;
 
 public class AdminLanding extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.bananabargains.adminUserIdKey";
     private static final String PREFERENCES_KEY = "com.example.bananabargains.ADMIN_PREFERENCES_KEY";
     private ActivityAdminLandingBinding binding;
     private AppCompatButton mLogoutAdminButton;
+    private AppCompatButton mAddProductButton;
     private int mUserId = -1;
     private SharedPreferences mPreferences = null;
     private User mUser;
@@ -38,11 +38,19 @@ public class AdminLanding extends AppCompatActivity {
         //TODO: Get main display widgets and display them
         mAdminLanding = binding.adminBananaBargainsDisplay;
         mLogoutAdminButton = binding.userLogoutButton;
+        mAddProductButton = binding.adminAddProductButton;
 
         mLogoutAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logoutUser();
+            }
+        });
+        mAddProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddBananas.intentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }

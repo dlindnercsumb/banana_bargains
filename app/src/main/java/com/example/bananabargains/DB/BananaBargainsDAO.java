@@ -30,6 +30,11 @@ public interface BananaBargainsDAO {
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE + " WHERE mUserId =:userId")
     User getUserById(int userId);
 
+    @Query("UPDATE " + AppDatabase.USER_TABLE + " SET mHasMembership = :isMember WHERE mUserId =:userId")
+    void updateMembership(int isMember, int userId);
+    @Query("UPDATE " + AppDatabase.USER_TABLE + " SET mTotalMoney = :totalMoney WHERE mUserId =:userId")
+    void updateMoney(double totalMoney, int userId);
+
     //* --- CRUD for Cart ---*//
     @Insert
     void insert(Cart... cart);
@@ -55,5 +60,4 @@ public interface BananaBargainsDAO {
     //* --- Queries for Cart ---*//
     @Query("SELECT * FROM " + AppDatabase.BANANA_TABLE)
     List<Banana> getAllBananas();
-
 }

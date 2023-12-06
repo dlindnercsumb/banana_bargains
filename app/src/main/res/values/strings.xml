@@ -11,4 +11,9 @@
     <string name="title_activity_login">Banana Bargains Login</string>
     <string name="welcome">Welcome: </string>
     <string name="welcomeAdmin"> Welcome Admin: </string>
+    <string name="membershipDescription">Purchase a membership and get 50% off all orders</string>
+    <string name="membershipPrice"> Memberships are $10</string>
+    <string name="buyMembership">Buy Membership</string>
+    <string name="checkout">Checkout</string>
+    <string name ="logoutNoQuestionMark">Logout</string>
 </resources>
