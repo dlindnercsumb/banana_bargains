@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFERENCES_KEY = "com.example.bananabargains.PREFERENCES_KEY";
     private BananaBargainsDAO mBananaBargainsDAO;
     private TextView mMainDisplay;
+    private TextView mMainUsername;
     private AppCompatButton mLogoutButton;
     private AppCompatButton mBuyMembershipButton;
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mMainDisplay = binding.mainBananaBargainsDisplay;
         mLogoutButton = binding.userLogoutButton;
         mBuyMembershipButton = binding.userBuyMembershipButton;
+        mMainUsername = binding.mainUsername;
 
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

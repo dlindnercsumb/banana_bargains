@@ -6,22 +6,28 @@ import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.Banana;
 import com.example.bananabargains.DB.BananaBargainsDAO;
 import com.example.bananabargains.databinding.ActivityAddBananasBinding;
 
 public class AddBananas extends AppCompatActivity {
+    private static final String PREFERENCES_KEY = "com.example.bananabargains.PREFERENCES_KEY";
+    private static final String USER_ID_KEY = "com.example.bananabargains.userIdKey";
+    private SharedPreferences mPreferences = null;
     private ActivityAddBananasBinding binding;
     private EditText mEnterProductName;
     private EditText mEnterPrice;
     private AppCompatButton mAddProductToDatabaseButton;
     private BananaBargainsDAO mBananaBargainsDAO;
+    private int mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,27 @@ public class AddBananas extends AppCompatActivity {
                 submitNewProduct();
             }
         });
+
+        getDatabase();
+    }
+
+    private void getDatabase() {
+        mBananaBargainsDAO= Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .allowMainThreadQueries()
+                .build()
+                .BananaBargainsDAO();
+    }
+
+    private void getPrefs() {
+        mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+    }
+
+    private void getUserId() {
+        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        if (mPreferences == null) {
+            getPrefs();
+        }
+        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
     }
 
     private void submitNewProduct() {
@@ -56,6 +83,10 @@ public class AddBananas extends AppCompatActivity {
             mBananaBargainsDAO.insert(banana);
 
             Toast.makeText(AddBananas.this, productName + " added to inventory.", Toast.LENGTH_SHORT).show();
+
+            getUserId();
+            Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUserId);
+            startActivity(intent);
         }
     }
 
