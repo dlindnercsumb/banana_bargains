@@ -3,6 +3,7 @@ package com.example.bananabargains;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.room.Room;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,18 +14,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.bananabargains.DB.AppDatabase;
+import com.example.bananabargains.DB.BananaBargainsDAO;
 import com.example.bananabargains.DB.User;
 import com.example.bananabargains.databinding.ActivityAdminLandingBinding;
-import com.example.bananabargains.databinding.ActivityMainBinding;
 
 public class AdminLanding extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.bananabargains.adminUserIdKey";
     private static final String PREFERENCES_KEY = "com.example.bananabargains.ADMIN_PREFERENCES_KEY";
     private ActivityAdminLandingBinding binding;
     private AppCompatButton mLogoutAdminButton;
+    private AppCompatButton mAddProductButton;
+    private TextView mMainAdminUsername;
     private int mUserId = -1;
     private SharedPreferences mPreferences = null;
     private User mUser;
+    private BananaBargainsDAO mBananaBargainsDAO;
 
     private TextView mAdminLanding;
     @Override
@@ -35,9 +40,13 @@ public class AdminLanding extends AppCompatActivity {
         binding = ActivityAdminLandingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getDatabase();
+
         //TODO: Get main display widgets and display them
         mAdminLanding = binding.adminBananaBargainsDisplay;
         mLogoutAdminButton = binding.userLogoutButton;
+        mAddProductButton = binding.adminAddProductButton;
+        mMainAdminUsername = binding.mainAdminUsername;
 
         mLogoutAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +54,22 @@ public class AdminLanding extends AppCompatActivity {
                 logoutUser();
             }
         });
+        mAddProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddBananas.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
     }
+
+    private void getDatabase() {
+        mBananaBargainsDAO= Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .allowMainThreadQueries()
+                .build()
+                .BananaBargainsDAO();
+    }
+
     private void getPrefs() {
         mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }

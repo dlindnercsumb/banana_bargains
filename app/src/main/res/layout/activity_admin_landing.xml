@@ -79,6 +79,7 @@
         android:gravity="center"
         android:text="@string/welcomeAdmin"
         android:textColor="#020202"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/userItemsInCart"
         app:layout_constraintEnd_toEndOf="@+id/bananaBargainsToolbar"
@@ -90,8 +91,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/userLogoutButton"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="94dp"
-        android:layout_height="45dp"
+        android:layout_width="107dp"
+        android:layout_height="54dp"
         android:background="@drawable/rounded_corners_main_screen"
         android:text="Logout"
         android:textColor="@color/black"
@@ -99,10 +100,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
         app:layout_constraintEnd_toEndOf="@+id/bananaBargainsToolbar"
-        app:layout_constraintHorizontal_bias="0.869"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/welcomeAdminUserText"
         app:layout_constraintTop_toTopOf="@+id/welcomeAdminUserText"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintVertical_bias="0.291" />
 
     <TextView
         android:id="@+id/userItemsInCart"
@@ -134,19 +135,19 @@
         app:layout_constraintVertical_bias="0.347" />
 
     <TextView
-        android:id="@+id/mainUsername"
+        android:id="@+id/mainAdminUsername"
         android:layout_width="75dp"
         android:layout_height="25dp"
         android:gravity="center"
         android:shadowColor="#050505"
         android:text="@string/username"
         android:textColor="#000000"
-        android:textSize="14dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
         app:layout_constraintEnd_toStartOf="@+id/userLogoutButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/appBarLogo"
         app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbar"
-        app:layout_constraintVertical_bias="0.093" />
+        app:layout_constraintVertical_bias="0.104" />
 </androidx.constraintlayout.widget.ConstraintLayout>
