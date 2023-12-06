@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -28,6 +29,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
         getDatabase();
 
+        insertDefaultBananas();
+
         checkForUser();
 
         loginUser(mUserId);
 
-        //TODO: Get main display widgets and display them
+        // Get main display widgets and display them
         mMainDisplay = binding.mainBananaBargainsDisplay;
         mLogoutButton = binding.userLogoutButton;
 
@@ -146,8 +151,15 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-    // TODO: CHANGE THIS TO UPDATE RECYCLERVIEW
+    /**
+     * Sets up display for recyclerview
+     */
     private void refreshDisplay(){
+        mBananaList = mBananaBargainsDAO.getAllBananas();
+        BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList);
+        mMainDisplay.setAdapter(buttonPanelAdapter);
+        mMainDisplay.setLayoutManager(new LinearLayoutManager(this));
+        /*
         mBananaList = mBananaBargainsDAO.getAllBananas();
         if(!mBananaList.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -158,7 +170,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mMainDisplay.setText(R.string.no_bananas_message);
         }
+        */
     }
+
+    /**
+     * Inserts 6 default banana items into database if no records in database
+     */
+    private void insertDefaultBananas() {
+        mBananaList = mBananaBargainsDAO.getAllBananas();
+        if (mBananaList.size() <= 0) {
+            mBananaBargainsDAO.insert(new Banana(1,"Ripe Banana",1.00));
+            mBananaBargainsDAO.insert(new Banana(2,"Green Banana",1.00));
+            mBananaBargainsDAO.insert(new Banana(3,"Moldy Banana",1.00));
+            mBananaBargainsDAO.insert(new Banana(4,"Banana Bread",1.00));
+            mBananaBargainsDAO.insert(new Banana(5,"Banana Pudding",1.00));
+            mBananaBargainsDAO.insert(new Banana(6,"Banana-Shaped USB Drive",999.99));
+        }
+    }
+
     private void logoutUser() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage(R.string.logout);

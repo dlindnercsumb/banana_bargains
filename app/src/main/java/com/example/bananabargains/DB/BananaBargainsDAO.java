@@ -52,7 +52,7 @@ public interface BananaBargainsDAO {
     @Delete
     void delete(Banana banana);
 
-    //* --- Queries for Cart ---*//
+    //* --- Queries for Banana ---*//
     @Query("SELECT * FROM " + AppDatabase.BANANA_TABLE)
     List<Banana> getAllBananas();
 
