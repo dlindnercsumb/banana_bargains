@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.view.MenuInflater;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.bananabargains.userIdKey";
     private static final String PREFERENCES_KEY = "com.example.bananabargains.PREFERENCES_KEY";
     private BananaBargainsDAO mBananaBargainsDAO;
-    private TextView mMainDisplay;
+    private RecyclerView mMainDisplay;
     private AppCompatButton mLogoutButton;
 
     //Info to login user
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    // TODO: CHANGE THIS TO UPDATE RECYCLERVIEW
     private void refreshDisplay(){
         mBananaList = mBananaBargainsDAO.getAllBananas();
         if(!mBananaList.isEmpty()) {
