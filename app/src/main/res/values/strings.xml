@@ -15,5 +15,9 @@
     <string name="membershipPrice"> Memberships are $10</string>
     <string name="buyMembership">Buy Membership</string>
     <string name="checkout">Checkout</string>
-    <string name ="logoutNoQuestionMark">Logout</string>
+    <string name="logoutNoQuestionMark">Logout</string>
+    <string name="addFunds">Add Funds</string>
+    <string name="backToCheckout">Back to Checkout</string>
+    <string name="backToHome">Back to Home</string>
+    <string name="thanksForShoppingMessage">Thanks for shopping at Banana Bargains!</string>
 </resources>

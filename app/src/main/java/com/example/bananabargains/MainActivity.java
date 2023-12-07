@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mMainUsername;
     private AppCompatButton mLogoutButton;
     private AppCompatButton mBuyMembershipButton;
+    private AppCompatButton mCheckoutButton;
 
     //Info to login user
     private int mUserId = -1;
@@ -70,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
         mLogoutButton = binding.userLogoutButton;
         mBuyMembershipButton = binding.userBuyMembershipButton;
         mMainUsername = binding.mainUsername;
+        mCheckoutButton = binding.userCheckoutButton;
+
+        mCheckoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = BuyBananas.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
 
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
