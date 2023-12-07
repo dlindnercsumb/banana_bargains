@@ -23,6 +23,7 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
     private List<String> localDataStrings;
     private List<Double> localDataDoubles;
     private List<Banana> localBananaSet;
+    // TODO: GIVE BANANALISTADAPTER ACCESS TO CURRENT USER SO THAT CARTS CAN BE LINKED
 
     /**
      * Provide a reference to the type of views that you are using
