@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void refreshDisplay(){
         mBananaList = mBananaBargainsDAO.getAllBananas();
-        BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList);
+        BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList, mUserId);
         mMainDisplay.setAdapter(buttonPanelAdapter);
         mMainDisplay.setLayoutManager(new LinearLayoutManager(this));
         /*

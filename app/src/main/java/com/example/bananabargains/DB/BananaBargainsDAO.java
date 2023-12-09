@@ -46,6 +46,26 @@ public interface BananaBargainsDAO {
     void delete(Cart cart);
 
     //* --- Queries for Cart ---*//
+    @Query("SELECT * FROM " + AppDatabase.CART_TABLE)
+    List<Cart> getAllCarts();
+
+    @Query("SELECT * FROM " + AppDatabase.CART_TABLE + " WHERE mUserId = :mUserId")
+    List<Cart> getCartByUserId(int mUserId);
+
+    @Query("SELECT * FROM CART_TABLE " +
+            "INNER JOIN BANANA_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
+            "INNER JOIN USER_TABLE ON USER_TABLE.mUserId = CART_TABLE.mUserId " +
+            "WHERE USER_TABLE.mUsername LIKE :username")
+    List<Cart> findCartByUsername(String username);
+
+    @Query("SELECT * FROM CART_TABLE " +
+            "INNER JOIN BANANA_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
+            "INNER JOIN USER_TABLE ON USER_TABLE.mUserId = CART_TABLE.mUserId " +
+            "WHERE USER_TABLE.mUserId LIKE :mUserId")
+    List<Cart> findCartByUserId(int mUserId);
+
+    @Query("DELETE FROM CART_TABLE WHERE mBananaId = :mBananaId")
+    void deleteCartsByBananaId(int mBananaId);
 
     //* --- CRUD for Banana ---*//
     @Insert

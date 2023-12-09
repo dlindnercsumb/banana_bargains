@@ -12,12 +12,18 @@ public class Cart {
     private double mTotalPrice;
     private int mProductCount;
 
+    public Cart (int mUserId, int mBananaId) {
+        this.mUserId = mUserId;
+        this.mBananaId = mBananaId;
+    }
+    /*
     public Cart(int cartId, double totalPrice, int productCount) {
         //Should get userId and bananaId from joining other tables
         this.mCartId = cartId;
         this.mTotalPrice = totalPrice;
         this.mProductCount = productCount;
     }
+    */
 
     public int getCartId() {
         return mCartId;
