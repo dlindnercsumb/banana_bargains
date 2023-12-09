@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Turns the list of bananas into views that can be displayed
  */
-public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.ViewHolder> {
+public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActivityBananaListAdapter.ViewHolder> {
     private Context context; // of the activity using this adapter, either MainActivity or AdminLanding... I think
     private List<String> localDataStrings;
     private List<Double> localDataDoubles;
@@ -97,7 +97,7 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
      * @param context context of the activity using this adapter
      * @param bananas list of bananas which came from database
      */
-    public BananaListAdapter(Context context, List<Banana> bananas, int mUserId) {
+    public MainActivityBananaListAdapter(Context context, List<Banana> bananas, int mUserId) {
         this.context = context;
         this.localBananaSet = bananas;
         this.mUserId = mUserId;

@@ -11,27 +11,19 @@ import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.Banana;
 import com.example.bananabargains.DB.BananaBargainsDAO;
 import com.example.bananabargains.DB.User;
-import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
 
 import com.example.bananabargains.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -197,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
         // refresh recycler view
         mBananaList = mBananaBargainsDAO.getAllBananas();
-        BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList, mUserId);
+        MainActivityBananaListAdapter buttonPanelAdapter = new MainActivityBananaListAdapter(this,mBananaList, mUserId);
         mMainDisplay.setAdapter(buttonPanelAdapter);
         mMainDisplay.setLayoutManager(new LinearLayoutManager(this));
         /*
