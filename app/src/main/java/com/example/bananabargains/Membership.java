@@ -66,12 +66,12 @@ public class Membership extends AppCompatActivity {
             getPrefs();
         }
         mUserId = mPreferences.getInt(USER_ID_KEY, -1);
-        //Set to 1 for "True"
         mUser = mBananaBargainsDAO.getUserById(mUserId);
         Double userMoney = mUser.getTotalMoney();
         if(userMoney < 10.00) {
             Toast.makeText(Membership.this, "Insufficient funds", Toast.LENGTH_SHORT).show();
         } else {
+            //Set to 1 for "True"
             mBananaBargainsDAO.updateMembership(1, mUserId);
             mBananaBargainsDAO.updateMoney(userMoney- 10.00, mUserId);
             Toast.makeText(Membership.this, "Thanks for becoming a member, " + mUser.getUsername(), Toast.LENGTH_SHORT).show();

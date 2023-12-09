@@ -6,6 +6,91 @@
     android:layout_height="match_parent"
     tools:context=".Membership">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bananaBargainsToolbarMembership"
+        android:layout_width="413dp"
+        android:layout_height="111dp"
+        android:background="@color/yellow"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-1dp" />
+
+    <ImageView
+        android:id="@+id/appBarLogoAddMembership"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintVertical_bias="0.432"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/welcomeAdminUserTextMembership"
+        android:layout_width="126dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="@string/welcomeAdmin"
+        android:textColor="#020202"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintVertical_bias="0.183" />
+
+    <TextView
+        android:id="@+id/userItemsInCartMembership"
+        android:layout_width="121dp"
+        android:layout_height="26dp"
+        android:gravity="center"
+        android:text="Items in Cart: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintVertical_bias="0.552" />
+
+    <TextView
+        android:id="@+id/userMoneyMembership"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Money: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintVertical_bias="0.891" />
+
+    <TextView
+        android:id="@+id/mainUsernameMembership"
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:shadowColor="#050505"
+        android:text="@string/username"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintEnd_toEndOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintHorizontal_bias="0.689"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarMembership"
+        app:layout_constraintVertical_bias="0.174" />
+
     <TextView
         android:id="@+id/purchaseMembershipDescription"
         android:layout_width="351dp"

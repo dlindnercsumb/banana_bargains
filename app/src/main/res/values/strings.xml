@@ -20,4 +20,8 @@
     <string name="backToCheckout">Back to Checkout</string>
     <string name="backToHome">Back to Home</string>
     <string name="thanksForShoppingMessage">Thanks for shopping at Banana Bargains!</string>
+    <string name="plus">+</string>
+    <string name="confirm">Confirm</string>
+    <string name="chooseAmount">Choose Amount</string>
+    <string name="initialAmount">0</string>
 </resources>

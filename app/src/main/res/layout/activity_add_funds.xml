@@ -6,6 +6,123 @@
     android:layout_height="match_parent"
     tools:context=".AddFunds">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bananaBargainsToolbarAddFunds"
+        android:layout_width="413dp"
+        android:layout_height="111dp"
+        android:background="@color/yellow"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-1dp" />
+
+    <ImageView
+        android:id="@+id/appBarLogoAddFunds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintVertical_bias="0.432"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/welcomeAdminUserTextAddFunds"
+        android:layout_width="126dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="@string/welcomeAdmin"
+        android:textColor="#020202"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintVertical_bias="0.183" />
+
+    <TextView
+        android:id="@+id/userItemsInCartAddFunds"
+        android:layout_width="121dp"
+        android:layout_height="26dp"
+        android:gravity="center"
+        android:text="Items in Cart: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintVertical_bias="0.564" />
+
+    <TextView
+        android:id="@+id/userMoneyAddFunds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Money: { }"
+        android:textColor="#020202"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintVertical_bias="0.88" />
+
+    <TextView
+        android:id="@+id/mainUsernameAddFunds"
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:shadowColor="#050505"
+        android:text="@string/username"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.186" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/incrementAddFundsButton"
+        android:layout_width="77dp"
+        android:layout_height="62dp"
+        android:background="@drawable/rounded_corners_main_screen"
+        android:text="@string/plus"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addFundsToAccountButton"
+        android:layout_width="106dp"
+        android:layout_height="44dp"
+        android:background="@drawable/rounded_corners_main_screen"
+        android:text="@string/confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/backToCheckoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userMoneyAddFunds"
+        app:layout_constraintVertical_bias="0.708" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/backToCheckoutButton"
         android:layout_width="190dp"
@@ -21,5 +138,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.888" />
+
+    <TextView
+        android:id="@+id/chooseAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseAmount"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/backToCheckoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
+        app:layout_constraintVertical_bias="0.234" />
+
+    <TextView
+        android:id="@+id/fundAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/initialAmount"
+        android:textSize="96sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/backToCheckoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userMoneyAddFunds"
+        app:layout_constraintVertical_bias="0.491" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
