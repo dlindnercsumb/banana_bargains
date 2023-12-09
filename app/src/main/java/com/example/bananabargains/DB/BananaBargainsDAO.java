@@ -62,7 +62,7 @@ public interface BananaBargainsDAO {
             "INNER JOIN BANANA_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
             "INNER JOIN USER_TABLE ON USER_TABLE.mUserId = CART_TABLE.mUserId " +
             "WHERE USER_TABLE.mUserId LIKE :mUserId")
-    List<Cart> findCartByUserId(int mUserId);
+    List<Cart> findCartsByUserId(int mUserId);
 
     @Query("DELETE FROM CART_TABLE WHERE mBananaId = :mBananaId")
     void deleteCartsByBananaId(int mBananaId);
@@ -80,4 +80,7 @@ public interface BananaBargainsDAO {
     //* --- Queries for Banana ---*//
     @Query("SELECT * FROM " + AppDatabase.BANANA_TABLE)
     List<Banana> getAllBananas();
+
+    @Query("SELECT * FROM " + AppDatabase.BANANA_TABLE + " WHERE mBananaId = :mBananaId")
+    Banana getBananaById(int mBananaId);
 }

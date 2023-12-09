@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 
@@ -40,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private BananaBargainsDAO mBananaBargainsDAO;
     private RecyclerView mMainDisplay;
     private TextView mMainUsername;
+    private TextView mMainItemCount;
+    private TextView mMainMoneyAmount;
     private AppCompatButton mLogoutButton;
     private AppCompatButton mBuyMembershipButton;
     private AppCompatButton mCheckoutButton;
+
 
     //Info to login user
     private int mUserId = -1;
@@ -72,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         mBuyMembershipButton = binding.userBuyMembershipButton;
         mMainUsername = binding.mainUsername;
         mCheckoutButton = binding.userCheckoutButton;
+        mMainItemCount = binding.userItemsInCartCount;
+        mMainMoneyAmount = binding.userMoneyAmount;
 
         mCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,9 +179,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up display for recyclerview
+     * Sets up display for recyclerview and user info
      */
     private void refreshDisplay(){
+        // refresh username text
+        mMainUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
+
+        // refresh item count
+        // I know this is weird but it gets a list of carts, and each cart is essentially a banana
+        int itemCount = mBananaBargainsDAO.findCartsByUserId(mUserId).size();
+        //Log.d("ITEM_COUNT", "" + itemCount);
+        mMainItemCount.setText("" + itemCount);
+
+        // refresh money amount
+        String formattedMoney =  String.format("$%.2f",mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        mMainMoneyAmount.setText(formattedMoney);
+
+        // refresh recycler view
         mBananaList = mBananaBargainsDAO.getAllBananas();
         BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList, mUserId);
         mMainDisplay.setAdapter(buttonPanelAdapter);

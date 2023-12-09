@@ -53,7 +53,7 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
                     getDatabase();
 
                     // get bananas linked to user
-                    List<Cart> carts = mBananaBargainsDAO.findCartByUserId(mUserId);
+                    List<Cart> carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
 
                     // represents the banana being clicked in recyclerview
                     Banana currentBanana = localBananaSet.get(getAdapterPosition());
@@ -65,15 +65,15 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
                     mBananaBargainsDAO.insert(cart);
 
                     // ==== OPTIONAL DEBUG INFO ====
-                    carts = mBananaBargainsDAO.findCartByUserId(mUserId);
+                    carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
                     StringBuilder sb = new StringBuilder();
                     sb.append("Cart Id: " + cart.getCartId() + "\n");
                     // output a log for the list of items the user has
                     for (Cart c : carts) {
-                        sb.append("\tUser Id: ");
+                        sb.append("\tUser Id: , " + c.getUserId());
                         sb.append(c.getUserId());
                         sb.append(" | ");
-                        sb.append("Banana Id: ");
+                        sb.append("Banana Id: , " + c.getBananaId());
                         sb.append(c.getBananaId());
                         sb.append("\n");
                     }
@@ -124,7 +124,6 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.text_row_item, viewGroup, false);
 
