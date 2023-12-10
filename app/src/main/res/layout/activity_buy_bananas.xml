@@ -122,6 +122,23 @@
         app:layout_constraintStart_toEndOf="@+id/buyBananasMoney"
         app:layout_constraintTop_toBottomOf="@+id/buyBananasItemsInCartCount" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/buyBananasDisplay"
+        android:layout_width="386dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="120dp"
+        android:fadeScrollbars="true"
+        android:scrollbars="vertical"
+        android:text="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyBananasToolbar"
+        app:layout_constraintVertical_bias="0.98" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addFundsToUserButton"
         android:layout_width="190dp"
@@ -133,9 +150,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintVertical_bias="0.201" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cartCheckoutButton"
