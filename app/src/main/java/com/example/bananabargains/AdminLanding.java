@@ -62,7 +62,7 @@ public class AdminLanding extends AppCompatActivity {
             }
         });
     }
-
+    // So this should be similar to BuyBananas.  And now I begin...
     private void getDatabase() {
         mBananaBargainsDAO= Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
                 .allowMainThreadQueries()
