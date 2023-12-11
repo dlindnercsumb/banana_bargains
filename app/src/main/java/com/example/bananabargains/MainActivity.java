@@ -11,26 +11,20 @@ import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.Banana;
 import com.example.bananabargains.DB.BananaBargainsDAO;
 import com.example.bananabargains.DB.User;
-import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.View;
 
 import com.example.bananabargains.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private BananaBargainsDAO mBananaBargainsDAO;
     private RecyclerView mMainDisplay;
     private TextView mMainUsername;
+    private TextView mMainItemCount;
+    private TextView mMainMoneyAmount;
     private AppCompatButton mLogoutButton;
     private AppCompatButton mBuyMembershipButton;
     private AppCompatButton mCheckoutButton;
+
 
     //Info to login user
     private int mUserId = -1;
@@ -72,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         mBuyMembershipButton = binding.userBuyMembershipButton;
         mMainUsername = binding.mainUsername;
         mCheckoutButton = binding.userCheckoutButton;
+        mMainItemCount = binding.userItemsInCartCount;
+        mMainMoneyAmount = binding.userMoneyAmount;
 
         mCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +97,15 @@ public class MainActivity extends AppCompatActivity {
 
         refreshDisplay();
 
-        //Later method to add banana to cart
-//        mAddBananaToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                addBananaToCart();
-//                refreshDisplay();
-//            }
-//        });
+        setupRecyclerView();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshDisplay();
+    }
+
     public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(USER_ID_KEY, userId);
@@ -173,25 +172,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up display for recyclerview
+     * refreshes user info
      */
-    private void refreshDisplay(){
+    private void refreshDisplay() {
+        Log.d("MainActivity", "refreshDisplay: DISPLAY REFRESHED");
+        // refresh username text
+        mMainUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
+
+        // refresh item count
+        // I know this is weird but it gets a list of carts, and each cart is essentially a banana
+        int itemCount = mBananaBargainsDAO.findCartsByUserId(mUserId).size();
+        //Log.d("ITEM_COUNT", "" + itemCount);
+        mMainItemCount.setText("" + itemCount);
+
+        // refresh money amount
+        String formattedMoney = String.format("$%.2f", mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        mMainMoneyAmount.setText(formattedMoney);
+    }
+
+    /**
+     * sets up recyclerview
+     * Also includes what happens when recyclerview is clicked (refreshes display)
+     */
+    private void setupRecyclerView() {
+        // refresh recycler view
         mBananaList = mBananaBargainsDAO.getAllBananas();
-        BananaListAdapter buttonPanelAdapter = new BananaListAdapter(this,mBananaList);
+        MainActivityBananaListAdapter buttonPanelAdapter = new MainActivityBananaListAdapter(this,mBananaList, mUserId);
         mMainDisplay.setAdapter(buttonPanelAdapter);
         mMainDisplay.setLayoutManager(new LinearLayoutManager(this));
-        /*
-        mBananaList = mBananaBargainsDAO.getAllBananas();
-        if(!mBananaList.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for(Banana banana:  mBananaList) {
-                sb.append(banana.toString());
+
+        // Set the click listener for the adapter
+        buttonPanelAdapter.setOnItemClickListener(new MainActivityBananaListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                refreshDisplay();
             }
-            mMainDisplay.setText(sb.toString());
-        } else {
-            mMainDisplay.setText(R.string.no_bananas_message);
-        }
-        */
+        });
+
     }
 
     /**

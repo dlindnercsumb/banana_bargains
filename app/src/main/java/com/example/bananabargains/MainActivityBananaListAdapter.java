@@ -9,26 +9,46 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.Banana;
+import com.example.bananabargains.DB.BananaBargainsDAO;
+import com.example.bananabargains.DB.Cart;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Turns the list of bananas into views that can be displayed
+ * There's also an onclicklistener in MainActivity's setupRecyclerView()
  */
-public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.ViewHolder> {
+public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActivityBananaListAdapter.ViewHolder> {
     private Context context; // of the activity using this adapter, either MainActivity or AdminLanding... I think
     private List<String> localDataStrings;
     private List<Double> localDataDoubles;
     private List<Banana> localBananaSet;
+    private BananaBargainsDAO mBananaBargainsDAO;
+    private int mUserId;
+
+    /**
+     * a way for MainActivity to set the listener
+     * will be used to update user info in MainActivity
+     */
+    private OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    // Provide a way for the MainActivity to set the listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewForString; // holds descriptions of bananas
         private final TextView textViewForDouble; // holds prices of bananas
         private final Button addButton;
@@ -44,14 +64,44 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("AddButton", "CLICK: " + textViewForString.getText().toString());
-                    // TODO: MAKE CHANGES TO USER'S CART
-                    // if user doesn't have a cart
-                        // create a new cart
-                        // add item to cart
-                    // else
-                        // get cart that belongs to user
-                        // add item to cart
+
+                    // Notify the click event to the MainActivity
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(getAdapterPosition());
+                    }
+
+                    // get bananas linked to user
+                    List<Cart> carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
+
+                    // represents the banana being clicked in recyclerview
+                    Banana currentBanana = localBananaSet.get(getAdapterPosition());
+                    Log.d("AddButton", currentBanana.getBananaDescription() + " was clicked!");
+
+                    // create a new cart
+                    Cart cart = new Cart(mUserId, currentBanana.getBananaId());
+                    // add item to database
+                    mBananaBargainsDAO.insert(cart);
+
+                    // Notify the click event to the MainActivity, so that user info can update
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(getAdapterPosition());
+                    }
+
+                    // ==== OPTIONAL DEBUG INFO ====
+                    carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Cart Id: " + cart.getCartId() + "\n");
+                    // output a log for the list of items the user has
+                    for (Cart c : carts) {
+                        sb.append("\tUser Id: , " + c.getUserId());
+                        sb.append(c.getUserId());
+                        sb.append(" | ");
+                        sb.append("Banana Id: , " + c.getBananaId());
+                        sb.append(c.getBananaId());
+                        sb.append("\n");
+                    }
+                    Log.d("AddButton", "Carts: \n" + sb);
+                    // =============================
                 }
             });
         }
@@ -70,9 +120,10 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
      * @param context context of the activity using this adapter
      * @param bananas list of bananas which came from database
      */
-    public BananaListAdapter(Context context, List<Banana> bananas) {
+    public MainActivityBananaListAdapter(Context context, List<Banana> bananas, int mUserId) {
         this.context = context;
         this.localBananaSet = bananas;
+        this.mUserId = mUserId;
 
         // create list of descriptions and prices from bananas list
         this.localDataStrings = new ArrayList<String>();
@@ -95,8 +146,10 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
 
+        getDatabase();
+
+        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.text_row_item, viewGroup, false);
 
@@ -132,4 +185,12 @@ public class BananaListAdapter extends RecyclerView.Adapter<BananaListAdapter.Vi
     public int getItemCount() {
         return localBananaSet.size();
     }
+
+    private void getDatabase() {
+        mBananaBargainsDAO= Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .allowMainThreadQueries()
+                .build()
+                .BananaBargainsDAO();
+    }
+
 }
