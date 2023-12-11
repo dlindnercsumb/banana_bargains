@@ -52,15 +52,6 @@ public interface BananaBargainsDAO {
     @Query("SELECT * FROM " + AppDatabase.CART_TABLE + " WHERE mUserId = :mUserId")
     List<Cart> getCartByUserId(int mUserId);
 
-    /*
-    This doesn't work yet
-    @Query("SELECT * FROM CART_TABLE " +
-            "INNER JOIN BANANA_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
-            "INNER JOIN USER_TABLE ON USER_TABLE.mUserId = CART_TABLE.mUserId " +
-            "WHERE USER_TABLE.mUsername LIKE :mUserId AND BANANA_TABLE.mBananaId LIKE :mBananaId")
-    List<Cart> findCartsByUserIdAndBananaId(int mUserId, int mBananaId);
-    */
-
     @Query("SELECT * FROM CART_TABLE " +
             "INNER JOIN BANANA_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
             "INNER JOIN USER_TABLE ON USER_TABLE.mUserId = CART_TABLE.mUserId " +
@@ -75,6 +66,9 @@ public interface BananaBargainsDAO {
 
     @Query("DELETE FROM CART_TABLE WHERE mBananaId = :mBananaId AND mUserId = :mUserId")
     void deleteCartFromUser(int mUserId, int mBananaId);
+
+    @Query("DELETE FROM CART_TABLE WHERE mUserId = :mUserId")
+    void deleteAllCartsFromUser(int mUserId);
 
     @Query("DELETE FROM CART_TABLE WHERE mBananaId = :mBananaId")
     void deleteCartsByBananaId(int mBananaId);
@@ -97,6 +91,12 @@ public interface BananaBargainsDAO {
     Banana getBananaById(int mBananaId);
 
     @Query("SELECT DISTINCT BANANA_TABLE.mBananaId FROM BANANA_TABLE " +
+            "INNER JOIN CART_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
+            "INNER JOIN USER_TABLE ON CART_TABLE.mUserId = USER_TABLE.mUserId " +
+            "WHERE USER_TABLE.mUserId LIKE :mUserId")
+    List<Integer> getBananaIdByUserId(int mUserId);
+
+    @Query("SELECT BANANA_TABLE.mBananaId FROM BANANA_TABLE " +
             "INNER JOIN CART_TABLE ON BANANA_TABLE.mBananaId = CART_TABLE.mBananaId " +
             "INNER JOIN USER_TABLE ON CART_TABLE.mUserId = USER_TABLE.mUserId " +
             "WHERE USER_TABLE.mUserId LIKE :mUserId")

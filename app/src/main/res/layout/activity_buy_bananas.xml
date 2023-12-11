@@ -125,7 +125,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/buyBananasDisplay"
         android:layout_width="386dp"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="120dp"
@@ -137,7 +137,53 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buyBananasToolbar"
-        app:layout_constraintVertical_bias="0.98" />
+        app:layout_constraintVertical_bias="0.666" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/BuyBananasBottomToolbar"
+        android:layout_width="413dp"
+        android:layout_height="70dp"
+        android:background="@color/yellow"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.856"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/BuyBananasTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Total"
+        android:textColor="#020202"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintTop_toTopOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <TextView
+        android:id="@+id/BuyBananasTotalCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="$"
+        android:textColor="#020202"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BuyBananasBottomToolbar"
+        app:layout_constraintVertical_bias="0.8" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addFundsToUserButton"

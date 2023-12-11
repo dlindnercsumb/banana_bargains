@@ -13,14 +13,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bananabargains.DB.AppDatabase;
 import com.example.bananabargains.DB.Banana;
 import com.example.bananabargains.DB.BananaBargainsDAO;
-import com.example.bananabargains.databinding.ActivityAddBananasBinding;
+import com.example.bananabargains.DB.Cart;
 import com.example.bananabargains.databinding.ActivityBuyBananasBinding;
-import com.example.bananabargains.databinding.ActivityMainBinding;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class BuyBananas extends AppCompatActivity {
     private TextView mBuyUsername;
     private TextView mBuyItemCount;
     private TextView mBuyMoney;
+    private TextView mCartTotal;
+    private TextView mCartTotalAmount;
     private RecyclerView mMainDisplay;
     private BananaBargainsDAO mBananaBargainsDAO;
     private int mUserId;
@@ -53,12 +57,16 @@ public class BuyBananas extends AppCompatActivity {
         mBuyItemCount = binding.buyBananasItemsInCartCount;
         mBuyMoney = binding.buyBananasMoneyAmount;
         mMainDisplay = binding.buyBananasDisplay;
+        mCartTotal = binding.BuyBananasTotal;
+        mCartTotalAmount = binding.BuyBananasTotalCost;
 
         getUserId();
 
         getDatabase();
 
         refreshDisplay();
+
+        setupRecyclerView();
 
         mAddFundsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +79,51 @@ public class BuyBananas extends AppCompatActivity {
         mCartCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // initialize cart total
+                Double cartTotal = 0.00;
+                List<Integer> bananaIdList = mBananaBargainsDAO.getBananaIdsByUserId(mUserId);
+                for(Integer i : bananaIdList) {
+                    // turn id into a price and add it to total
+                    cartTotal += mBananaBargainsDAO.getBananaById(i).getBananaPrice();
+                }
+                // 50% off if user is a member
+                if (mBananaBargainsDAO.getUserById(mUserId).getHasMembership() == 1) {
+                    cartTotal = cartTotal/2;
+                }
+                // round the cart to 2 decimals (same rounding used in %.2f for string formatting)
+                BigDecimal cartTotalRounded = new BigDecimal(cartTotal).setScale(2, RoundingMode.HALF_EVEN);
+                cartTotal = cartTotalRounded.doubleValue();
+
+                // if cart total is greater than user total, notify user
+                if (cartTotal > mBananaBargainsDAO.getUserById(mUserId).getTotalMoney()) {
+                    // TODO: THIS DOESN'T HAVE TO BE A TOAST
+                    Toast.makeText(getApplicationContext(), "\t\t\tNot enough funds\nDon't PEEL disappointed", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // subtract from user total
+                Log.d("BuyBananas", "userTotal Before: " + mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+                Double userTotal = mBananaBargainsDAO.getUserById(mUserId).getTotalMoney() - cartTotal;
+                Log.d("BuyBananas", "userTotal After: " + userTotal);
+                // set user total to new amount
+                mBananaBargainsDAO.updateMoney(userTotal, mUserId);
+                // remove user's carts from database
+                mBananaBargainsDAO.deleteAllCartsFromUser(mUserId);
+
                 Intent intent = CheckoutScreen.intentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
 
         getDatabase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshDisplay();
+        setupRecyclerView();
     }
 
     private void getUserId() {
@@ -105,6 +152,7 @@ public class BuyBananas extends AppCompatActivity {
     }
 
     private void refreshDisplay() {
+        Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
 
         // refresh username
         mBuyUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
@@ -114,32 +162,62 @@ public class BuyBananas extends AppCompatActivity {
         mBuyItemCount.setText("" + itemCount);
 
         // refresh money amount
-        String formattedMoney =  String.format("$%.2f",mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        String formattedMoney = String.format("$%.2f", mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
         mBuyMoney.setText(formattedMoney);
 
+        // refresh total text
+        if (mBananaBargainsDAO.getUserById(mUserId).getHasMembership() == 1) {
+            // set text to: Member Total
+            mCartTotal.setText("Member Total");
+        } else {
+            // set text to: Total
+            mCartTotal.setText("Total");
+        }
+
+        // refresh total cost
+        double totalCost = 0;
+        // get cart total
+        List<Cart> cartList = mBananaBargainsDAO.findCartsByUserId(mUserId);
+        for (Cart c : cartList) {
+            double bananaPrice = mBananaBargainsDAO.getBananaById(c.getBananaId()).getBananaPrice();
+            totalCost += bananaPrice;
+        }
+        // if member
+        if(mBananaBargainsDAO.getUserById(mUserId).getHasMembership() == 1) {
+            // 50% off cart total
+            totalCost = totalCost/2;
+        }
+        String formattedTotal = String.format("$%.2f", totalCost);
+        mCartTotalAmount.setText(formattedTotal);
+
+    }
+
+    /**
+     * Sets up RecyclerView
+     * Also includes what happens when recyclerview is clicked (refreshes display)
+     */
+    private void setupRecyclerView() {
         // -- refresh banana list
         // get Integer list of unique banana id from the user
-        List<Integer> mUniqueBananaIdsUser = mBananaBargainsDAO.getBananaIdsByUserId(mUserId);
+        List<Integer> mUniqueBananaIdsUser = mBananaBargainsDAO.getBananaIdByUserId(mUserId);
         // turn that Integer list into a banana list
         mBananaList = new ArrayList<>();
         for (Integer i : mUniqueBananaIdsUser) {
             // add integer to new list
             mBananaList.add(mBananaBargainsDAO.getBananaById(i));
         }
-        // === DEBUG, IGNORE ===
-        StringBuilder sb = new StringBuilder();
-        for (Banana b : mBananaList) {
-            Log.d("BuyBananas", "" + b.getBananaDescription());
-            sb.append("Description: " + b.getBananaDescription() + "\n" +
-                    "Price: " + b.getBananaPrice() + "\n" +
-                    "Id: " + b.getBananaId() + "\n\n");
-        }
-        Log.d("BuyBananas", sb.toString());
-        // === ===== ===
 
         // refresh recycler view
         BuyBananasAdapter buttonPanelAdapter = new BuyBananasAdapter(this, mBananaList,mUserId);
         mMainDisplay.setAdapter(buttonPanelAdapter);
         mMainDisplay.setLayoutManager(new LinearLayoutManager(this));
+
+        // Set the click listener for the adapter
+        buttonPanelAdapter.setOnItemClickListener(new BuyBananasAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                refreshDisplay();
+            }
+        });
     }
 }

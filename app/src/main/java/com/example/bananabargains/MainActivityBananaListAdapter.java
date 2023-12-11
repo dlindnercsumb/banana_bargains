@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Turns the list of bananas into views that can be displayed
+ * There's also an onclicklistener in MainActivity's setupRecyclerView()
  */
 public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActivityBananaListAdapter.ViewHolder> {
     private Context context; // of the activity using this adapter, either MainActivity or AdminLanding... I think
@@ -29,6 +30,19 @@ public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActi
     private List<Banana> localBananaSet;
     private BananaBargainsDAO mBananaBargainsDAO;
     private int mUserId;
+
+    /**
+     * a way for MainActivity to set the listener
+     * will be used to update user info in MainActivity
+     */
+    private OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    // Provide a way for the MainActivity to set the listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     /**
      * Provide a reference to the type of views that you are using
@@ -50,7 +64,11 @@ public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActi
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getDatabase();
+
+                    // Notify the click event to the MainActivity
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(getAdapterPosition());
+                    }
 
                     // get bananas linked to user
                     List<Cart> carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
@@ -63,6 +81,11 @@ public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActi
                     Cart cart = new Cart(mUserId, currentBanana.getBananaId());
                     // add item to database
                     mBananaBargainsDAO.insert(cart);
+
+                    // Notify the click event to the MainActivity, so that user info can update
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(getAdapterPosition());
+                    }
 
                     // ==== OPTIONAL DEBUG INFO ====
                     carts = mBananaBargainsDAO.findCartsByUserId(mUserId);
@@ -123,6 +146,9 @@ public class MainActivityBananaListAdapter extends RecyclerView.Adapter<MainActi
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+
+        getDatabase();
+
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.text_row_item, viewGroup, false);

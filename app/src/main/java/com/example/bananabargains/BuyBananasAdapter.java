@@ -18,13 +18,28 @@ import com.example.bananabargains.DB.Cart;
 
 import java.util.List;
 
+/**
+ * Turns the list of carts, or bananas owned by user, into views that can be displayed
+ * There's also an onclicklistener in BuyBanana's setupRecyclerView()
+ */
 public class BuyBananasAdapter extends RecyclerView.Adapter<BuyBananasAdapter.ViewHolder> {
     private Context context; // of the activity using this adapter
     private BananaBargainsDAO mBananaBargainsDAO;
     private List<Banana> mBananaList;
     private int mUserId;
 
-
+    /**
+     * a way for BuyBananas to set the listener
+     * will be used to update user info in BuyBananas
+     */
+    private BuyBananasAdapter.OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    // Provide a way for BuyBananas to set the listener
+    public void setOnItemClickListener(BuyBananasAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
 
     /**
@@ -51,18 +66,20 @@ public class BuyBananasAdapter extends RecyclerView.Adapter<BuyBananasAdapter.Vi
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Log.d("BuyBananasAdapter", "onClick: Size: " + mBananaBargainsDAO.findCartsByBananaIdAndUserId(mBananaList.get(getAdapterPosition()).getBananaId(),mUserId));
                     // remove cart from table
                     mBananaBargainsDAO.deleteCartFromUser(mUserId, mBananaList.get(getAdapterPosition()).getBananaId());
-                    Log.d("BuyBananasAdapter", "onClick: Size: " + mBananaBargainsDAO.findCartsByBananaIdAndUserId(mBananaList.get(getAdapterPosition()).getBananaId(),mUserId));
 
                     // if the position clicked is a valid position
                     if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        // remove from local list (probably isn't necessary)
+                        // remove from local list
                         mBananaList.remove(getAdapterPosition());
                         // remove the view
                         notifyItemRemoved(getAdapterPosition());
+                    }
+
+                    // Notify the click event to the MainActivity, so that user info can update
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(getAdapterPosition());
                     }
                 }
             });
@@ -84,15 +101,14 @@ public class BuyBananasAdapter extends RecyclerView.Adapter<BuyBananasAdapter.Vi
     }
 
     /**
-     * Constructor: Initializes the adapter
+     * Constructor: Initializes the adapter from list of bananas
      * @param context context of the activity using this adapter
+     * @param bananas unique list of banana ids that are in carts
      * @param mUserId user id
      */
     public BuyBananasAdapter(Context context, List<Banana> bananas,int mUserId) {
         this.context = context;
         this.mUserId = mUserId;
-
-        // get list of bananas
         mBananaList = bananas;
     }
 
@@ -118,8 +134,7 @@ public class BuyBananasAdapter extends RecyclerView.Adapter<BuyBananasAdapter.Vi
 
     /**
      *
-     * @param viewHolder The ViewHolder which should be updated to represent the contents of the
-     *        item at the given position in the data set.
+     * @param viewHolder The ViewHolder which gets updated to represent info about bananas in carts
      * @param position The position of the item within the adapter's data set.
      */
     @Override
@@ -146,7 +161,7 @@ public class BuyBananasAdapter extends RecyclerView.Adapter<BuyBananasAdapter.Vi
     }
 
     /**
-     * used to get the size of the local list of bananas (should be same size as list from database)
+     * used to get the size of the local list of bananas
      * @return size of set of bananas
      */
     @Override
