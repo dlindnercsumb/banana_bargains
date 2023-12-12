@@ -31,10 +31,10 @@
 
     <TextView
         android:id="@+id/welcomeAdminUserTextAddFunds"
-        android:layout_width="126dp"
-        android:layout_height="24dp"
+        android:layout_width="94dp"
+        android:layout_height="29dp"
         android:gravity="center"
-        android:text="@string/welcomeAdmin"
+        android:text="@string/welcome"
         android:textColor="#020202"
         android:textSize="16dp"
         android:textStyle="bold"
@@ -50,7 +50,7 @@
         android:layout_width="121dp"
         android:layout_height="26dp"
         android:gravity="center"
-        android:text="Items in Cart: { }"
+        android:text="@string/itemsPlaceholder"
         android:textColor="#020202"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
@@ -75,9 +75,9 @@
 
     <TextView
         android:id="@+id/mainUsernameAddFunds"
-        android:layout_width="75dp"
-        android:layout_height="25dp"
-        android:gravity="center"
+        android:layout_width="156dp"
+        android:layout_height="27dp"
+        android:gravity="center|left"
         android:shadowColor="#050505"
         android:text="@string/username"
         android:textColor="#000000"
@@ -85,10 +85,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbarAddFunds"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintStart_toStartOf="@+id/bananaBargainsToolbarAddFunds"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
+        app:layout_constraintVertical_bias="0.178" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/incrementAddFundsButton"

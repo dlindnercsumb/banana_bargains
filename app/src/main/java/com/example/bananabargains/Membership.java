@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,10 @@ public class Membership extends AppCompatActivity {
     private ActivityMembershipBinding binding;
     private SharedPreferences mPreferences = null;
 
+    private TextView mMembershipUsername;
+    private TextView mMembershipItemCount;
+    private TextView mMembershipMoney;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,9 @@ public class Membership extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mConfirmBuyMembershipButton = binding.confirmBuyMembershipButton;
+        mMembershipUsername = binding.mainUsernameMembership;
+        mMembershipItemCount = binding.userItemsInCartMembership;
+        mMembershipMoney = binding.userMoneyMembership;
 
         mConfirmBuyMembershipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +55,8 @@ public class Membership extends AppCompatActivity {
         });
 
         getDatabase();
+
+        refreshDisplay();
     }
 
     private void getDatabase() {
@@ -54,6 +64,29 @@ public class Membership extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build()
                 .BananaBargainsDAO();
+    }
+
+    private void refreshDisplay() {
+        Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
+
+        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        if (mPreferences == null) {
+            getPrefs();
+        }
+        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
+        mUser = mBananaBargainsDAO.getUserById(mUserId);
+
+        // refresh username
+        mMembershipUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
+
+        // refresh item count
+        int itemCount = mBananaBargainsDAO.findCartsByUserId(mUserId).size();
+        mMembershipItemCount.setText("Items in cart: " + itemCount);
+
+        // refresh money amount
+        String formattedMoney = String.format("$%.2f", mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        mMembershipMoney.setText(formattedMoney);
+
     }
 
     private void getPrefs() {

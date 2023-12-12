@@ -46,7 +46,7 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="-1dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/userCheckoutButton"
@@ -116,9 +116,11 @@
         android:textColor="#020202"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/userMoney"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toEndOf="@+id/appBarLogo"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/bananaBargainsToolbar"
+        app:layout_constraintVertical_bias="0.505" />
 
     <TextView
         android:id="@+id/userMoney"
@@ -130,7 +132,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bananaBargainsToolbar"
         app:layout_constraintEnd_toStartOf="@+id/userLogoutButton"
-        app:layout_constraintHorizontal_bias="0.349"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toEndOf="@+id/appBarLogo"
         app:layout_constraintTop_toBottomOf="@+id/userItemsInCart"
         app:layout_constraintVertical_bias="0.347" />
@@ -154,7 +156,7 @@
 
     <TextView
         android:id="@+id/userItemsInCartCount"
-        android:layout_width="90dp"
+        android:layout_width="24dp"
         android:layout_height="26dp"
         android:gravity="center_vertical|start"
         android:text="#"
@@ -162,22 +164,22 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/userItemsInCart"
         app:layout_constraintEnd_toStartOf="@+id/userLogoutButton"
-        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/userItemsInCart"
         app:layout_constraintTop_toTopOf="@+id/userItemsInCart"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/userMoneyAmount"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
         android:gravity="center_vertical|start"
         android:text="$"
         android:textColor="#020202"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/userMoney"
         app:layout_constraintEnd_toEndOf="@+id/userItemsInCartCount"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toEndOf="@+id/userMoney"
         app:layout_constraintTop_toTopOf="@+id/userMoney"
         app:layout_constraintVertical_bias="0.0" />
