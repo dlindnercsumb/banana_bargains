@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.bananabargains.DB.AppDatabase;
@@ -41,8 +42,10 @@ public class CheckoutScreen extends AppCompatActivity {
         mBackToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("CheckoutScreen", "onClick: mUserId " + mUserId);
                 Intent intent = MainActivity.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
+
             }
         });
 
@@ -50,6 +53,10 @@ public class CheckoutScreen extends AppCompatActivity {
     }
     private void getUserId() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        Log.d("CheckoutScreen", "getUserId: mUserId " + mUserId);
+        if(mUserId != -1) {
+            return;
+        }
         if (mPreferences == null) {
             getPrefs();
         }

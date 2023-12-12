@@ -62,6 +62,8 @@ public class BuyBananas extends AppCompatActivity {
 
         getUserId();
 
+        Log.d("BuyBananas", "mUserId: " + mUserId);
+
         getDatabase();
 
         refreshDisplay();
@@ -103,15 +105,16 @@ public class BuyBananas extends AppCompatActivity {
                 }
 
                 // subtract from user total
-                Log.d("BuyBananas", "userTotal Before: " + mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+                //Log.d("BuyBananas", "userTotal Before: " + mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
                 Double userTotal = mBananaBargainsDAO.getUserById(mUserId).getTotalMoney() - cartTotal;
-                Log.d("BuyBananas", "userTotal After: " + userTotal);
+                //Log.d("BuyBananas", "userTotal After: " + userTotal);
                 // set user total to new amount
                 mBananaBargainsDAO.updateMoney(userTotal, mUserId);
                 // remove user's carts from database
                 mBananaBargainsDAO.deleteAllCartsFromUser(mUserId);
 
                 Intent intent = CheckoutScreen.intentFactory(getApplicationContext());
+                intent.putExtra(USER_ID_KEY,mUserId);
                 startActivity(intent);
             }
         });
@@ -128,6 +131,10 @@ public class BuyBananas extends AppCompatActivity {
 
     private void getUserId() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        //Log.d("BuyBananas", "getUserId: mUserId " + mUserId);
+        if(mUserId != -1) {
+            return;
+        }
         if (mPreferences == null) {
             getPrefs();
         }
@@ -140,7 +147,6 @@ public class BuyBananas extends AppCompatActivity {
 
     public static Intent intentFactory(Context context){
         Intent intent = new Intent(context, BuyBananas.class);
-
         return intent;
     }
 
@@ -152,7 +158,12 @@ public class BuyBananas extends AppCompatActivity {
     }
 
     private void refreshDisplay() {
-        Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
+        Log.d("BuyBananas", "refreshDisplay: mUserId" + mUserId);
+        if(mUserId == -1) {
+            return;
+        }
+
+        //Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
 
         // refresh username
         mBuyUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
