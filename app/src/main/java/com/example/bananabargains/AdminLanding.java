@@ -94,7 +94,7 @@ public class AdminLanding extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //refreshDisplay();
+        refreshDisplay();
     }
 
     private void getDatabase() {
