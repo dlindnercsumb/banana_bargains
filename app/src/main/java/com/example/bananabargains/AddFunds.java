@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,9 @@ public class AddFunds extends AppCompatActivity {
     private AppCompatButton mAddFundsToAccountButton;
     private AppCompatButton mIncrementFundsButton;
     private TextView mFundAmount;
+    private TextView mAddFundsUsername;
+    private TextView mAddFundsItemCount;
+    private TextView mAddFundsMoney;
     private AppCompatButton mBackToCheckoutButton;
     private BananaBargainsDAO mBananaBargainsDAO;
     private int mUserId;
@@ -36,7 +40,6 @@ public class AddFunds extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_funds);
 
         binding = ActivityAddFundsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -45,6 +48,9 @@ public class AddFunds extends AppCompatActivity {
         mFundAmount = binding.fundAmount;
         mIncrementFundsButton = binding.incrementAddFundsButton;
         mAddFundsToAccountButton = binding.addFundsToAccountButton;
+        mAddFundsUsername = binding.mainUsernameAddFunds;
+        mAddFundsItemCount = binding.userItemsInCartAddFunds;
+        mAddFundsMoney = binding.userMoneyAddFunds;
 
         mIncrementFundsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +75,30 @@ public class AddFunds extends AppCompatActivity {
             }
         });
         getDatabase();
+        refreshDisplay();
+    }
+
+    private void refreshDisplay() {
+        Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
+
+        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        if (mPreferences == null) {
+            getPrefs();
+        }
+        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
+        mUser = mBananaBargainsDAO.getUserById(mUserId);
+
+        // refresh username
+        mAddFundsUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
+
+        // refresh item count
+        int itemCount = mBananaBargainsDAO.findCartsByUserId(mUserId).size();
+        mAddFundsItemCount.setText("Items in cart: " + itemCount);
+
+        // refresh money amount
+        String formattedMoney = String.format("$%.2f", mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        mAddFundsMoney.setText(formattedMoney);
+
     }
 
     private void addFunds(int count) {
