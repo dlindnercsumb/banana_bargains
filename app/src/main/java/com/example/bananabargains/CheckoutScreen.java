@@ -37,12 +37,21 @@ public class CheckoutScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mBackToHomeButton = binding.backToHomeButton;
+
+        getDatabase();
         getUserId();
 
         mBackToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("CheckoutScreen", "onClick: mUserId " + mUserId);
+                // if they're admin redirect to admin landing
+                if (mBananaBargainsDAO.getUserById(mUserId).getHasMembership() == 1) {
+                    Log.d("CheckoutScreen", "onClick: Redirecting to AdminLanding");
+                    Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUserId);
+                    startActivity(intent);
+                    return;
+                }
                 Intent intent = MainActivity.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
 

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         mCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BuyBananas.intentFactory(getApplicationContext());
+                Intent intent = BuyBananas.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
             }
         });

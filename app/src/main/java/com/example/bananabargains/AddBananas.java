@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bananabargains.DB.AppDatabase;
@@ -25,6 +27,9 @@ public class AddBananas extends AppCompatActivity {
     private ActivityAddBananasBinding binding;
     private EditText mEnterProductName;
     private EditText mEnterPrice;
+    private TextView mAddBananasUsername;
+    private TextView mAddBananasItemCount;
+    private TextView mAddBananasMoney;
     private AppCompatButton mAddProductToDatabaseButton;
     private BananaBargainsDAO mBananaBargainsDAO;
     private int mUserId;
@@ -40,6 +45,9 @@ public class AddBananas extends AppCompatActivity {
         mEnterProductName = binding.enterProductName;
         mEnterPrice = binding.enterPrice;
         mAddProductToDatabaseButton = binding.addProductToDatabaseButton;
+        mAddBananasUsername = binding.mainUsernameAddBanana;
+        mAddBananasItemCount = binding.AddBananasItemCountText;
+        mAddBananasMoney = binding.AddBananasMoneyAmountText;
 
         mAddProductToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +57,10 @@ public class AddBananas extends AppCompatActivity {
         });
 
         getDatabase();
+
+        getUserId();
+
+        refreshDisplay();
     }
 
     private void getDatabase() {
@@ -64,6 +76,9 @@ public class AddBananas extends AppCompatActivity {
 
     private void getUserId() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        if(mUserId != -1) {
+            return;
+        }
         if (mPreferences == null) {
             getPrefs();
         }
@@ -83,15 +98,29 @@ public class AddBananas extends AppCompatActivity {
             mBananaBargainsDAO.insert(banana);
 
             Toast.makeText(AddBananas.this, productName + " added to inventory.", Toast.LENGTH_SHORT).show();
+            refreshDisplay();
 
-            getUserId();
             Intent intent = AdminLanding.intentFactory(getApplicationContext(), mUserId);
             startActivity(intent);
         }
     }
 
-    public static Intent intentFactory(Context context){
+    public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, AddBananas.class);
+        intent.putExtra(USER_ID_KEY, userId);
         return intent;
+    }
+
+    private void refreshDisplay() {
+        // refresh username
+        mAddBananasUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
+
+        // refresh item count
+        int itemCount = mBananaBargainsDAO.findCartsByUserId(mUserId).size();
+        mAddBananasItemCount.setText("" + itemCount);
+
+        // refresh money amount
+        String formattedMoney = String.format("$%.2f", mBananaBargainsDAO.getUserById(mUserId).getTotalMoney());
+        mAddBananasMoney.setText(formattedMoney);
     }
 }
