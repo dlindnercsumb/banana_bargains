@@ -217,12 +217,12 @@ public class MainActivity extends AppCompatActivity {
     private void insertDefaultBananas() {
         mBananaList = mBananaBargainsDAO.getAllBananas();
         if (mBananaList.size() <= 0) {
-            mBananaBargainsDAO.insert(new Banana("Ripe Banana",1.00));
-            mBananaBargainsDAO.insert(new Banana("Green Banana",1.00));
-            mBananaBargainsDAO.insert(new Banana("Moldy Banana",1.00));
-            mBananaBargainsDAO.insert(new Banana("Banana Bread",1.00));
-            mBananaBargainsDAO.insert(new Banana("Banana Pudding",1.00));
-            mBananaBargainsDAO.insert(new Banana("Banana-Shaped USB Drive",999.99));
+            mBananaBargainsDAO.insert(new Banana("Ripe Banana",2.50));
+            mBananaBargainsDAO.insert(new Banana("Green Banana",2.00));
+            mBananaBargainsDAO.insert(new Banana("Moldy Banana",0.50));
+            mBananaBargainsDAO.insert(new Banana("Banana Bread",10.00));
+            mBananaBargainsDAO.insert(new Banana("Banana Pudding",7.50));
+            mBananaBargainsDAO.insert(new Banana("Golden Banana Elixer",29.99));
         }
     }
 
