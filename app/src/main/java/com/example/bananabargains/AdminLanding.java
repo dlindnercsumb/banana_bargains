@@ -73,14 +73,14 @@ public class AdminLanding extends AppCompatActivity {
         mAddProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = AddBananas.intentFactory(getApplicationContext());
+                Intent intent = AddBananas.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
             }
         });
         mAdminCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BuyBananas.intentFactory(getApplicationContext());
+                Intent intent = BuyBananas.intentFactory(getApplicationContext(), mUserId);
                 intent.putExtra(USER_ID_KEY,mUserId);
                 startActivity(intent);
             }

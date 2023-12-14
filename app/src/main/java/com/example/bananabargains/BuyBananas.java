@@ -73,7 +73,7 @@ public class BuyBananas extends AppCompatActivity {
         mAddFundsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = AddFunds.intentFactory(getApplicationContext());
+                Intent intent = AddFunds.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
             }
         });
@@ -145,8 +145,9 @@ public class BuyBananas extends AppCompatActivity {
         mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
-    public static Intent intentFactory(Context context){
+    public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, BuyBananas.class);
+        intent.putExtra(USER_ID_KEY, userId);
         return intent;
     }
 

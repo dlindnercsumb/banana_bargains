@@ -104,7 +104,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/adminBananaBargainsToolbar"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.28" />
 
     <TextView
         android:id="@+id/adminItemsInCart"
@@ -153,7 +153,7 @@
 
     <TextView
         android:id="@+id/adminMoneyAmount"
-        android:layout_width="74dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|start"
         android:text="$"
@@ -161,8 +161,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/adminBananaBargainsToolbar"
         app:layout_constraintEnd_toEndOf="@+id/adminBananaBargainsToolbar"
-        app:layout_constraintHorizontal_bias="0.663"
-        app:layout_constraintStart_toStartOf="@+id/adminBananaBargainsToolbar"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toEndOf="@+id/adminMoney"
         app:layout_constraintTop_toTopOf="@+id/adminBananaBargainsToolbar"
         app:layout_constraintVertical_bias="0.836" />
 
@@ -178,8 +178,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/adminBananaBargainsToolbar"
         app:layout_constraintEnd_toEndOf="@+id/adminBananaBargainsToolbar"
-        app:layout_constraintHorizontal_bias="0.665"
-        app:layout_constraintStart_toStartOf="@+id/adminBananaBargainsToolbar"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/welcomeAdminUserText"
         app:layout_constraintTop_toTopOf="@+id/adminBananaBargainsToolbar"
-        app:layout_constraintVertical_bias="0.093" />
+        app:layout_constraintVertical_bias="0.104" />
 </androidx.constraintlayout.widget.ConstraintLayout>

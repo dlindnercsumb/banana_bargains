@@ -64,29 +64,23 @@ public class AddFunds extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addFunds(count);
+                refreshDisplay();
             }
         });
 
         mBackToCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BuyBananas.intentFactory(getApplicationContext());
+                Intent intent = BuyBananas.intentFactory(getApplicationContext(), mUserId);
                 startActivity(intent);
             }
         });
         getDatabase();
+        checkForUser();
         refreshDisplay();
     }
 
     private void refreshDisplay() {
-        Log.d("BuyBananas", "refreshDisplay: REFRESH DISPLAY");
-
-        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
-        if (mPreferences == null) {
-            getPrefs();
-        }
-        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
-        mUser = mBananaBargainsDAO.getUserById(mUserId);
 
         // refresh username
         mAddFundsUsername.setText(mBananaBargainsDAO.getUserById(mUserId).getUsername());
@@ -101,12 +95,20 @@ public class AddFunds extends AppCompatActivity {
 
     }
 
-    private void addFunds(int count) {
+    private void checkForUser() {
         mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        if (mUserId != -1) {
+            mUser = mBananaBargainsDAO.getUserById(mUserId);
+            return;
+        }
         if (mPreferences == null) {
             getPrefs();
         }
         mUserId = mPreferences.getInt(USER_ID_KEY, -1);
+        mUser = mBananaBargainsDAO.getUserById(mUserId);
+    }
+
+    private void addFunds(int count) {
 
         mUser = mBananaBargainsDAO.getUserById(mUserId);
         Double userMoney = mUser.getTotalMoney();
@@ -119,9 +121,9 @@ public class AddFunds extends AppCompatActivity {
         mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
-    public static Intent intentFactory(Context context){
+    public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, AddFunds.class);
-
+        intent.putExtra(USER_ID_KEY, userId);
         return intent;
     }
 
